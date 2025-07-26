@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sumber Daya Manusia - Desa Borimasunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "fade-in-left": "fadeInLeft 0.8s ease-out",
+              "fade-in-right": "fadeInRight 0.8s ease-out",
+              "bounce-slow": "bounce 3s infinite",
+              marquee: "marquee 20s linear infinite",
+              "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
+              float: "float 3s ease-in-out infinite",
+              gradient: "gradient 6s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.8) 0%,
+          rgba(59, 130, 246, 0.6) 50%,
+          rgba(147, 197, 253, 0.4) 100%
+        );
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Intersection Observer styles */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Navbar styles - perbaikan utama */
+      .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-scrolled a {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled button {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled svg {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled .mobile-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased bg-gray-50">
+    <header
+      x-data="{ 
+        open: false, 
+        scrolled: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+        }
+      }"
+      :class="scrolled ? 'navbar-scrolled' : ''"
+      class="fixed top-0 w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between md:justify-center p-4"
+      >
+        <!-- Desktop nav -->
+        <nav class="space-x-6 hidden md:flex">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          @click="open = !open"
+          class="md:hidden flex items-center justify-center space-x-2 focus:outline-none absolute right-4 z-60"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white transition-colors duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              x-show="!open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              x-show="open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          <span class="text-white font-medium">Menu</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        x-show="open"
+        @click.outside="open = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        class="absolute top-full left-0 w-full mobile-menu shadow-lg md:hidden"
+        :class="scrolled ? 'bg-white/95' : 'bg-black/20'"
+        style="backdrop-filter: blur(10px)"
+      >
+        <nav class="flex flex-col items-center space-y-4 p-6">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+      </div>
+    </header>
+   <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- Background -->
+      <div
+        class="absolute z-10 inset-0 parallax w-full h-full"
+        style="background-image: url('/images/desa.jpg')"
+      >
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4"
+      >
+        <!-- Logo -->
+        <div class="animate-float mb-6">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow"
+          >
+            <img src="/images/logo.png" alt="Logo Desa" class="h-25 w-20" />
+          </div>
+        </div>
+
+        <!-- Judul -->
+        <h1
+          class="text-6xl font-bold mb-4 text-shadow animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          Desa Borimasunggu
+        </h1>
+
+        <!-- Subtitle  -->
+        <div
+          class="glass-effect rounded-2xl px-8 py-4 mb-8 animate-fade-in-up"
+          style="animation-delay: 0.4s"
+        >
+          <p class="text-xl font-medium">
+            Kecamatan Biringbulu, Kabupaten Gowa, Provinsi Sulawesi Selatan
+          </p>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="absolute bottom-0 w-full z-30">
+        <div class="gradient-bg py-4 overflow-hidden">
+          <div
+            class="animate-marquee whitespace-nowrap text-white font-bold text-lg"
+          >
+            Selamat Datang di Website Desa Borimasunggu Kecamatan Biringbulu
+            Kabupaten Gowa Provinsi Sulawesi Selatan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="relative py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <!-- Introduction Section -->
+        <section class="mb-16 fade-in">
+          <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">
+              Potensi Sumber Daya Manusia
+            </h2>
+            <div class="prose max-w-none text-gray-700">
+              <p class="text-lg mb-4">
+                Sumber Daya Manusia yang ada di Desa Borimasunggu merupakan aset
+                desa yang ketika dimanfaatkan dengan baik dapat menggerakkan
+                pembangunan desa ke arah yang lebih baik.
+              </p>
+              <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <p class="text-blue-800 font-medium">
+                  Jumlah penduduk Desa Borimasunggu saat ini berjumlah
+                  <span class="text-2xl font-bold">1.460</span> orang.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Population by Age Section -->
+        <section class="mb-16 fade-in">
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6">
+              <h2 class="text-2xl font-bold text-white">
+                Struktur Penduduk Berdasarkan Usia
+              </h2>
+            </div>
+            <div class="p-6">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Rentang Usia
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Jumlah (Orang)
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Persentase
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        1-4 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        106
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        7.26%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        5-9 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        118
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.08%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        10-14 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        120
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.22%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        15-19 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        119
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.15%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        20-24 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        84
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        5.75%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        25-29 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        92
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        6.30%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        30-34 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        117
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.01%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        35-39 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        139
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        9.52%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        45-49 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        117
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.01%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        50-54 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        105
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        7.19%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        55-59 Tahun
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        89
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        6.10%
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        60 Tahun Ke atas
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        119
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8.15%
+                      </td>
+                    </tr>
+                    <tr class="bg-blue-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900"
+                      >
+                        Total
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900"
+                      >
+                        1,460
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900"
+                      >
+                        100%
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Infrastructure Section -->
+        <section class="mb-16 fade-in">
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6">
+              <h2 class="text-2xl font-bold text-white">
+                Sarana dan Prasarana Desa
+              </h2>
+            </div>
+            <div class="p-6">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        No
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Sarana/Prasarana
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Jumlah
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Satuan
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Keterangan
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        1
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Kantor Desa
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        1
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        2
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Masjid
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        3
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        3
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Mushollah
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        9
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        4
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Pos Kamling
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        5
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        5
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        TK/PAUD
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        1
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        6
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        SD/Sederajat
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        2
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        7
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Pustu
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        1
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        8
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Poskesdes
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        0
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        9
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Posyandu
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        5
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        10
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Pasar Desa
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        0
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Unit
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        -
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="fade-in">
+          <div
+            class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8"
+          >
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+              Analisis Sumber Daya Manusia
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                  Potensi
+                </h3>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-green-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span
+                      >Jumlah penduduk usia produktif (15-59 tahun) cukup besar
+                      (57.53%)</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-green-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span
+                      >Fasilitas pendidikan dasar (2 SD dan 1 TK/PAUD) cukup
+                      memadai</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-green-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span
+                      >Fasilitas keagamaan (3 masjid dan 9 musholla) menunjukkan
+                      kehidupan beragama yang baik</span
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                  Tantangan
+                </h3>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-yellow-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                    <span
+                      >Kurangnya fasilitas kesehatan (hanya 1 Pustu dan belum
+                      ada Poskesdes)</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-yellow-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                    <span
+                      >Belum adanya pasar desa untuk mendukung perekonomian
+                      warga</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <svg
+                      class="h-5 w-5 text-yellow-500 mr-2 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                    <span
+                      >Penduduk usia lanjut (60+ tahun) cukup signifikan (8.15%)
+                      membutuhkan perhatian khusus</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p>&copy; 2024 Desa Borimasunggu. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Intersection Observer Script -->
+    <script>
+      // Intersection Observer untuk animasi fade-in
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      // Observe semua elemen dengan class fade-in
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeElements = document.querySelectorAll(".fade-in");
+        fadeElements.forEach((el) => observer.observe(el));
+      });
+
+      // Smooth scroll untuk internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

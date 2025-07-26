@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beranda - Desa Borimasunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "fade-in-left": "fadeInLeft 0.8s ease-out",
+              "fade-in-right": "fadeInRight 0.8s ease-out",
+              "bounce-slow": "bounce 3s infinite",
+              marquee: "marquee 20s linear infinite",
+              "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
+              float: "float 3s ease-in-out infinite",
+              gradient: "gradient 6s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.8) 0%,
+          rgba(59, 130, 246, 0.6) 50%,
+          rgba(147, 197, 253, 0.4) 100%
+        );
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Intersection Observer styles */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Navbar styles - perbaikan utama */
+      .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-scrolled a {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled button {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled svg {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled .mobile-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased bg-gray-50">
+    <header
+      x-data="{ 
+        open: false, 
+        scrolled: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+        }
+      }"
+      :class="scrolled ? 'navbar-scrolled' : ''"
+      class="fixed top-0 w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between md:justify-center p-4"
+      >
+        <!-- Desktop nav -->
+        <nav class="space-x-6 hidden md:flex">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          @click="open = !open"
+          class="md:hidden flex items-center justify-center space-x-2 focus:outline-none absolute right-4 z-60"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white transition-colors duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              x-show="!open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              x-show="open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          <span class="text-white font-medium">Menu</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        x-show="open"
+        @click.outside="open = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        class="absolute top-full left-0 w-full mobile-menu shadow-lg md:hidden"
+        :class="scrolled ? 'bg-white/95' : 'bg-black/20'"
+        style="backdrop-filter: blur(10px)"
+      >
+        <nav class="flex flex-col items-center space-y-4 p-6">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- Background -->
+      <div
+        class="absolute z-10 inset-0 parallax w-full h-full"
+        style="background-image: url('/images/desa.jpg')"
+      >
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4"
+      >
+        <!-- Logo -->
+        <div class="animate-float mb-6">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow"
+          >
+            <img src="/images/logo.png" alt="Logo Desa" class="h-25 w-20" />
+          </div>
+        </div>
+
+        <!-- Judul -->
+        <h1
+          class="text-6xl font-bold mb-4 text-shadow animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          Desa Borimasunggu
+        </h1>
+
+        <!-- Subtitle  -->
+        <div
+          class="glass-effect rounded-2xl px-8 py-4 mb-8 animate-fade-in-up"
+          style="animation-delay: 0.4s"
+        >
+          <p class="text-xl font-medium">
+            Kecamatan Biringbulu, Kabupaten Gowa, Provinsi Sulawesi Selatan
+          </p>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="absolute bottom-0 w-full z-30">
+        <div class="gradient-bg py-4 overflow-hidden">
+          <div
+            class="animate-marquee whitespace-nowrap text-white font-bold text-lg"
+          >
+            Selamat Datang di Website Desa Borimasunggu Kecamatan Biringbulu
+            Kabupaten Gowa Provinsi Sulawesi Selatan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="relative py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <!-- Organizational Structure Section -->
+        <section class="mb-16 fade-in">
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6">
+              <h2 class="text-2xl font-bold text-white">
+                Struktur Organisasi Pemerintahan Desa Borimasunggu
+              </h2>
+              <p class="text-blue-100 mt-1">
+                Kecamatan Biringbulu, Kabupaten Gowa
+              </p>
+            </div>
+            <div class="p-6">
+              <!-- Placeholder for organizational structure image -->
+              <!-- Organizational Structure Section -->
+              <section class="mb-16 fade-in">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div class="bg-gradient-to-r from-green-600 to-green-800 p-6">
+                    <h2 class="text-2xl font-bold text-white">
+                      Struktur Organisasi Desa Borimasunggu
+                    </h2>
+                  </div>
+                  <div class="p-6">
+                    <div class="bg-gray-100 rounded-lg p-8 text-center mb-8">
+                      <!-- Display actual organizational structure image -->
+                      <img
+                        src="/images/strukturdesa.png"
+                        alt="Struktur Organisasi Desa Borimasunggu"
+                        class="mx-auto max-w-full h-auto rounded"
+                      />
+                      <p class="text-gray-700 font-medium mt-4">
+                        Diagram Struktur Organisasi Pemerintahan Desa
+                        Borimasunggu
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- BPD Members Table -->
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                Anggota Badan Permusyawaratan Desa Borimasunggu Periode
+                2021-2026
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        NO
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Nama
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Jabatan
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Bidang Keterwakilan
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Wilayah
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        1
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        H. Muh. Zain
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Ketua
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Ketua Desa
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Desa
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        2
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Sanja
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Wakil Ketua
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Wakil Ketua
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Badenglolo
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        3
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Isdar Adi Putra
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Sekretaris
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Sekretaris
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Bontote'ne
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        4
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Poko
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Ketua Bidang Penyelenggaraan Pemerintah Desa dan
+                        pembinaan Kemasyarakatan
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Jenetallasa
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        5
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Sukirman
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota Bidang Penyelenggaraan Pemerintah Desa dan
+                        pembinaan Kemasyarakatan
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Borongkayua
+                      </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        6
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Abd. Rifai
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Ketua Bidang Pembangunan Desa Dan Pemberdayaan
+                        Masyarakat Desa
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Bontomanai
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        7
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                      >
+                        Hasdina
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Anggota Bidang Pembangunan Desa Dan Pemberdayaan
+                        Masyarakat Desa
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        Dusun Badenglolo
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PKK Team Section -->
+        <section class="mb-16 fade-in">
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-pink-600 to-pink-800 p-6">
+              <h2 class="text-2xl font-bold text-white">
+                Lembaga Kemasyarakatan Desa
+              </h2>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                Pemberdayaan Kesejahteraan Keluarga (PKK)
+              </h3>
+              <div class="prose max-w-none text-gray-700 mb-6">
+                <p>
+                  PKK merupakan salah satu Lembaga Kemasyarakatan Desa sebagai
+                  mitra pemerintah desa yang bertugas membantu Kepala Desa dalam
+                  melaksanakan pemberdayaan kesejahteraan keluarga.
+                </p>
+                <p class="mt-2">
+                  Untuk melaksanakan tugas dan fungsi PKK, Pemerintah Desa
+                  Borimasunggu menetapkan Tim Penggerak PKK Desa Borimasunggu
+                  periode 2021-2026 sebagai berikut:
+                </p>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-pink-50 rounded-lg p-6">
+                  <h4 class="text-lg font-semibold text-pink-800 mb-4">
+                    Struktur Tim Penggerak PKK Desa Borimasunggu Periode
+                    2019-2025
+                  </h4>
+                  <ul class="space-y-3">
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2"
+                        >BADAN PENYANTUN:</span
+                      >
+                      <span>H. Muh. Zain</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2"
+                        >PENASEHAT:</span
+                      >
+                      <span>Sakaria Razak, SE.</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2">KETUA:</span>
+                      <span>Sangnging</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2"
+                        >WAKIL KETUA:</span
+                      >
+                      <span>Samsinar</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2"
+                        >SEKRETARIS:</span
+                      >
+                      <span>Hj. Syamsiah</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="font-medium text-pink-700 mr-2"
+                        >BENDAHARA:</span
+                      >
+                      <span>Nurlia</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bg-gray-100 rounded-lg p-6">
+                  <h4 class="text-lg font-semibold text-gray-800 mb-4">
+                    Tugas dan Fungsi PKK
+                  </h4>
+                  <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                      <svg
+                        class="h-5 w-5 text-pink-500 mr-2 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span
+                        >Membantu pemerintah desa dalam pemberdayaan
+                        keluarga</span
+                      >
+                    </li>
+                    <li class="flex items-start">
+                      <svg
+                        class="h-5 w-5 text-pink-500 mr-2 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span
+                        >Meningkatkan kesejahteraan keluarga melalui berbagai
+                        program</span
+                      >
+                    </li>
+                    <li class="flex items-start">
+                      <svg
+                        class="h-5 w-5 text-pink-500 mr-2 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>Melaksanakan kegiatan sosial kemasyarakatan</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg
+                        class="h-5 w-5 text-pink-500 mr-2 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span
+                        >Mendorong partisipasi masyarakat dalam pembangunan
+                        desa</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Other Community Institutions -->
+        <section class="fade-in">
+          <div
+            class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8"
+          >
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+              Lembaga Kemasyarakatan Lainnya
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                  Karang Taruna
+                </h3>
+                <p class="text-gray-700">
+                  Organisasi kepemudaan yang bergerak di bidang sosial, ekonomi,
+                  dan pembangunan desa.
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                  Kelompok Tani
+                </h3>
+                <p class="text-gray-700">
+                  Kelompok masyarakat yang bergerak di bidang pertanian untuk
+                  meningkatkan produktivitas.
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                  Lembaga Adat
+                </h3>
+                <p class="text-gray-700">
+                  Lembaga yang menjaga dan melestarikan adat istiadat dan budaya
+                  Desa Borimasunggu.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p>&copy; 2024 Desa Borimasunggu. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Intersection Observer Script -->
+    <script>
+      // Intersection Observer untuk animasi fade-in
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      // Observe semua elemen dengan class fade-in
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeElements = document.querySelectorAll(".fade-in");
+        fadeElements.forEach((el) => observer.observe(el));
+      });
+
+      // Smooth scroll untuk internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

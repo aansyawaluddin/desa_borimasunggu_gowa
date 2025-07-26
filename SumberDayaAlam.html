@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sumber Daya Alam - Desa Borimasunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "fade-in-left": "fadeInLeft 0.8s ease-out",
+              "fade-in-right": "fadeInRight 0.8s ease-out",
+              "bounce-slow": "bounce 3s infinite",
+              marquee: "marquee 20s linear infinite",
+              "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
+              float: "float 3s ease-in-out infinite",
+              gradient: "gradient 6s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.8) 0%,
+          rgba(59, 130, 246, 0.6) 50%,
+          rgba(147, 197, 253, 0.4) 100%
+        );
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Intersection Observer styles */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Navbar styles - perbaikan utama */
+      .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-scrolled a {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled button {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled svg {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled .mobile-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+      
+    </style>
+  </head>
+
+  <body class="font-sans antialiased bg-gray-50">
+    <header
+      x-data="{ 
+        open: false, 
+        scrolled: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+        }
+      }"
+      :class="scrolled ? 'navbar-scrolled' : ''"
+      class="fixed top-0 w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between md:justify-center p-4"
+      >
+        <!-- Desktop nav -->
+        <nav class="space-x-6 hidden md:flex">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          @click="open = !open"
+          class="md:hidden flex items-center justify-center space-x-2 focus:outline-none absolute right-4 z-60"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white transition-colors duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              x-show="!open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              x-show="open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          <span class="text-white font-medium">Menu</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        x-show="open"
+        @click.outside="open = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        class="absolute top-full left-0 w-full mobile-menu shadow-lg md:hidden"
+        :class="scrolled ? 'bg-white/95' : 'bg-black/20'"
+        style="backdrop-filter: blur(10px)"
+      >
+        <nav class="flex flex-col items-center space-y-4 p-6">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- Background -->
+      <div
+        class="absolute z-10 inset-0 parallax w-full h-full"
+        style="background-image: url('/images/desa.jpg')"
+      >
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4"
+      >
+        <!-- Logo -->
+        <div class="animate-float mb-6">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow"
+          >
+            <img src="/images/logo.png" alt="Logo Desa" class="h-25 w-20" />
+          </div>
+        </div>
+
+        <!-- Judul -->
+        <h1
+          class="text-6xl font-bold mb-4 text-shadow animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          Desa Borimasunggu
+        </h1>
+
+        <!-- Subtitle  -->
+        <div
+          class="glass-effect rounded-2xl px-8 py-4 mb-8 animate-fade-in-up"
+          style="animation-delay: 0.4s"
+        >
+          <p class="text-xl font-medium">
+            Kecamatan Biringbulu, Kabupaten Gowa, Provinsi Sulawesi Selatan
+          </p>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="absolute bottom-0 w-full z-30">
+        <div class="gradient-bg py-4 overflow-hidden">
+          <div
+            class="animate-marquee whitespace-nowrap text-white font-bold text-lg"
+          >
+            Selamat Datang di Website Desa Borimasunggu Kecamatan Biringbulu
+            Kabupaten Gowa Provinsi Sulawesi Selatan
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Content -->
+    <main class="max-w-7xl mx-auto p-6 space-y-16">
+      <!-- Sumber Daya Alam -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            🌾 Sumber Daya Alam Desa
+          </h2>
+          <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+            Desa Borimasunggu memiliki potensi lahan yang belum dimanfaatkan
+            secara maksimal. Berikut luas lahan berdasarkan kategori:
+          </p>
+        </div>
+        <div class="grid gap-8 md:grid-cols-3">
+          <div
+            class="bg-white p-8 rounded-3xl shadow-lg card-hover border-l-4 border-green-500"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 icon-bg rounded-2xl flex items-center justify-center mr-4"
+              >
+                <span class="text-2xl">🌾</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">Persawahan</h3>
+            </div>
+            <p class="text-4xl font-bold number-counter mb-2">150</p>
+            <p class="text-gray-600">Hektar</p>
+          </div>
+          <div
+            class="bg-white p-8 rounded-3xl shadow-lg card-hover border-l-4 border-amber-500"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 icon-bg rounded-2xl flex items-center justify-center mr-4"
+              >
+                <span class="text-2xl">🏔️</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">Tanah Kering</h3>
+            </div>
+            <p class="text-4xl font-bold number-counter mb-2">933</p>
+            <p class="text-gray-600">Hektar</p>
+          </div>
+          <div
+            class="bg-white p-8 rounded-3xl shadow-lg card-hover border-l-4 border-emerald-500"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 icon-bg rounded-2xl flex items-center justify-center mr-4"
+              >
+                <span class="text-2xl">🌱</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">
+                Ladang & Perkebunan
+              </h3>
+            </div>
+            <p class="text-4xl font-bold number-counter mb-2">757.33</p>
+            <p class="text-gray-600">Hektar</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Luas Lahan Sawah -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            📊 Luas Lahan Sawah per Dusun
+          </h2>
+        </div>
+        <div class="table-modern bg-white shadow-xl">
+          <table class="min-w-full">
+            <thead
+              class="bg-gradient-to-r from-green-400 to-green-600 text-white"
+            >
+              <tr>
+                <th class="px-6 py-4 text-left font-semibold">Dusun</th>
+                <th class="px-6 py-4 text-center font-semibold">Teknis</th>
+                <th class="px-6 py-4 text-center font-semibold">Semi Teknis</th>
+                <th class="px-6 py-4 text-center font-semibold">Sederhana</th>
+                <th class="px-6 py-4 text-center font-semibold">Tadah Hujan</th>
+                <th class="px-6 py-4 text-center font-semibold">Total</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">Badenglolo</td>
+                <td class="px-6 py-4 text-center text-gray-700">65 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">10 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-500">13 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  13 Ha
+                </td>
+              </tr>
+              <tr
+                class="bg-gray-50 hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">Jenetallasa</td>
+                <td class="px-6 py-4 text-center text-gray-700">50 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">22 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  25 Ha
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">Bontomanai</td>
+                <td class="px-6 py-4 text-center text-gray-700">50 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">3 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-700">15 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  25 Ha
+                </td>
+              </tr>
+              <tr
+                class="bg-gray-50 hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">Bontote'ne</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">-</td>
+                <td class="px-6 py-4 text-center text-gray-700">3 Ha</td>
+                <td class="px-6 py-4 text-center text-gray-700">8 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  22 Ha
+                </td>
+              </tr>
+              <tr
+                class="bg-gradient-to-r from-green-100 to-green-200 font-bold"
+              >
+                <td class="px-6 py-4 text-gray-900">Jumlah</td>
+                <td class="px-6 py-4 text-center" colspan="4"></td>
+                <td
+                  class="px-6 py-4 text-center text-2xl text-green-700 pulse-animation"
+                >
+                  150 Ha
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Panjang Saluran Pengairan -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            💧 Panjang Saluran Pengairan per Dusun
+          </h2>
+        </div>
+        <div class="table-modern bg-white shadow-xl">
+          <table class="min-w-full">
+            <thead
+              class="bg-gradient-to-r from-blue-400 to-blue-600 text-white"
+            >
+              <tr>
+                <th class="px-4 py-4 font-semibold">Dusun</th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Primer Baik (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Primer Rusak (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Skunder Baik (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Skunder Rusak (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Tersier Baik (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Tersier Rusak (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Pembuangan Baik (m)
+                </th>
+                <th class="px-4 py-4 text-center font-semibold">
+                  Pembuangan Rusak (m)
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr
+                class="bg-white hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-4 font-medium text-gray-900">Badenglolo</td>
+                <td class="px-4 py-4 text-center text-green-600 font-semibold">
+                  500
+                </td>
+                <td class="px-4 py-4 text-center text-red-600 font-semibold">
+                  800
+                </td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-4 font-medium text-gray-900">Jenetallasa</td>
+                <td class="px-4 py-4 text-center text-green-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-red-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-4 font-medium text-gray-900">Bontomanai</td>
+                <td class="px-4 py-4 text-center text-green-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-red-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-4 font-medium text-gray-900">Bontote'ne</td>
+                <td class="px-4 py-4 text-center text-green-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-red-600 font-semibold">
+                  -
+                </td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+              <tr
+                class="bg-gray-50 hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-4 font-medium text-gray-900">Borongkayua</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-red-600 font-semibold">
+                  500
+                </td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+              <tr class="bg-gradient-to-r from-blue-100 to-blue-200 font-bold">
+                <td class="px-4 py-4 text-gray-900">Total</td>
+                <td class="px-4 py-4 text-center text-green-700 text-lg">
+                  500
+                </td>
+                <td class="px-4 py-4 text-center text-red-700 text-lg">1300</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+                <td class="px-4 py-4 text-center text-gray-400">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Luas Lahan Kering -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            📊 Luas lahan kering dalam Hektar Desa Borimasunggu
+          </h2>
+        </div>
+        <div class="table-modern bg-white shadow-xl">
+          <table class="min-w-full">
+            <thead
+              class="bg-gradient-to-r from-green-400 to-green-600 text-white"
+            >
+              <tr>
+                <th class="px-6 py-4 text-left font-semibold">No.</th>
+                <th class="px-6 py-4 text-center font-semibold">Peruntukan</th>
+                <th class="px-6 py-4 text-center font-semibold">Luas</th>
+                <th class="px-6 py-4 text-center font-semibold">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">1</td>
+                <td class="px-6 py-4 text-center text-gray-700">Sawah</td>
+                <td class="px-6 py-4 text-center text-gray-700">119,36 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  -
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">2</td>
+                <td class="px-6 py-4 text-center text-gray-700">Ladang</td>
+                <td class="px-6 py-4 text-center text-gray-700">119,36 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  -
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">3</td>
+                <td class="px-6 py-4 text-center text-gray-700">Perkebunan</td>
+                <td class="px-6 py-4 text-center text-gray-700">119,36 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  -
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">4</td>
+                <td class="px-6 py-4 text-center text-gray-700">Pemukiman</td>
+                <td class="px-6 py-4 text-center text-gray-700">119,36 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  -
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-green-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">5</td>
+                <td class="px-6 py-4 text-center text-gray-700">Lain-lain</td>
+                <td class="px-6 py-4 text-center text-gray-700">119,36 Ha</td>
+                <td class="px-6 py-4 text-center font-bold text-green-600">
+                  -
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Hasil Panen Tanaman Pangan -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            🌾 Hasil Panen Tanaman Pangan
+          </h2>
+        </div>
+        <div class="table-modern bg-white shadow-xl overflow-x-auto">
+          <table class="min-w-full border border-gray-200">
+            <thead
+              class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white"
+            >
+              <tr>
+                <th class="px-4 py-2 font-semibold text-left" rowspan="2">
+                  Jenis Tanaman
+                </th>
+                <th class="px-4 py-2 font-semibold text-left" rowspan="2">
+                  Kategori
+                </th>
+                <th class="px-4 py-2 font-semibold text-center" colspan="5">
+                  Dusun
+                </th>
+                <th class="px-4 py-2 font-semibold text-center" rowspan="2">
+                  Total
+                </th>
+              </tr>
+              <tr>
+                <th class="px-4 py-2 font-semibold text-center">Badenglolo</th>
+                <th class="px-4 py-2 font-semibold text-center">Jenetallasa</th>
+                <th class="px-4 py-2 font-semibold text-center">Bontomanai</th>
+                <th class="px-4 py-2 font-semibold text-center">Bontote'ne</th>
+                <th class="px-4 py-2 font-semibold text-center">Borongkayua</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <!-- Padi -->
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td
+                  class="px-4 py-2 font-bold text-gray-900 bg-yellow-50"
+                  rowspan="2"
+                >
+                  Padi
+                </td>
+                <td class="px-4 py-2 text-gray-800">Luas Panen</td>
+                <td class="px-4 py-2 text-center text-gray-700">65</td>
+                <td class="px-4 py-2 text-center text-gray-700">25</td>
+                <td class="px-4 py-2 text-center text-gray-700">15</td>
+                <td class="px-4 py-2 text-center text-gray-700">21</td>
+                <td class="px-4 py-2 text-center text-gray-700">22</td>
+                <td class="px-4 py-2 text-center text-gray-700">175 Ha</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-2 text-gray-800">Produktivitas (Ton/Ha)</td>
+                <td class="px-4 py-2 text-center text-gray-700">1,2</td>
+                <td class="px-4 py-2 text-center text-gray-700">1,26</td>
+                <td class="px-4 py-2 text-center text-gray-700">2,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">1,6</td>
+                <td class="px-4 py-2 text-center text-gray-700">2,2</td>
+                <td class="px-4 py-2 text-center text-gray-700">10,76</td>
+              </tr>
+
+              <!-- Jagung -->
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td
+                  class="px-4 py-2 font-bold text-gray-900 bg-yellow-50"
+                  rowspan="2"
+                >
+                  Jagung
+                </td>
+                <td class="px-4 py-2 text-gray-800">Luas Panen</td>
+                <td class="px-4 py-2 text-center text-gray-700">0,55</td>
+                <td class="px-4 py-2 text-center text-gray-700">0,40</td>
+                <td class="px-4 py-2 text-center text-gray-700">0,75</td>
+                <td class="px-4 py-2 text-center text-gray-700">0,55</td>
+                <td class="px-4 py-2 text-center text-gray-700">0,75</td>
+                <td class="px-4 py-2 text-center text-gray-700">3,75 Ha</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-2 text-gray-800">Produktivitas (Ton/Ha)</td>
+                <td class="px-4 py-2 text-center text-gray-700">150</td>
+                <td class="px-4 py-2 text-center text-gray-700">200</td>
+                <td class="px-4 py-2 text-center text-gray-700">400</td>
+                <td class="px-4 py-2 text-center text-gray-700">200</td>
+                <td class="px-4 py-2 text-center text-gray-700">100</td>
+                <td class="px-4 py-2 text-center text-gray-700">1.125</td>
+              </tr>
+
+              <!-- Pangan -->
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td
+                  class="px-4 py-2 font-bold text-gray-900 bg-yellow-50"
+                  rowspan="2"
+                >
+                  Pangan
+                </td>
+                <td class="px-4 py-2 text-gray-800">Luas Panen</td>
+                <td class="px-4 py-2 text-center text-gray-700">8,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">8,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">6,50</td>
+                <td class="px-4 py-2 text-center text-gray-700">6,00</td>
+                <td class="px-4 py-2 text-center text-gray-700">6,00</td>
+                <td class="px-4 py-2 text-center text-gray-700">96,25 Ha</td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-yellow-50 transition-colors duration-200"
+              >
+                <td class="px-4 py-2 text-gray-800">Produktivitas (Ton/Ha)</td>
+                <td class="px-4 py-2 text-center text-gray-700">2,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">2,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">-</td>
+                <td class="px-4 py-2 text-center text-gray-700">1,90</td>
+                <td class="px-4 py-2 text-center text-gray-700">1,25</td>
+                <td class="px-4 py-2 text-center text-gray-700">8,90</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Hewan Ternak -->
+      <section class="fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            🐄 Hewan Ternak di Desa Borimasunggu
+          </h2>
+        </div>
+        <div class="table-modern bg-white shadow-xl">
+          <table class="min-w-full">
+            <thead
+              class="bg-gradient-to-r from-purple-400 to-purple-600 text-white"
+            >
+              <tr>
+                <th class="px-6 py-4 font-semibold">Jenis Ternak/Unggas</th>
+                <th class="px-6 py-4 text-center font-semibold">Badenglolo</th>
+                <th class="px-6 py-4 text-center font-semibold">Jenetallasa</th>
+                <th class="px-6 py-4 text-center font-semibold">Bontomanai</th>
+                <th class="px-6 py-4 text-center font-semibold">Bontote'ne</th>
+                <th class="px-6 py-4 text-center font-semibold">Borongkayua</th>
+                <th class="px-6 py-4 text-center font-semibold">Total</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr
+                class="bg-white hover:bg-purple-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">🐄 Sapi</td>
+                <td class="px-6 py-4 text-center text-gray-700">35</td>
+                <td class="px-6 py-4 text-center text-gray-700">45</td>
+                <td class="px-6 py-4 text-center text-gray-700">150</td>
+                <td class="px-6 py-4 text-center text-gray-700">75</td>
+                <td class="px-6 py-4 text-center text-gray-700">20</td>
+                <td
+                  class="px-6 py-4 text-center font-bold text-purple-600 text-lg"
+                >
+                  325
+                </td>
+              </tr>
+              <tr
+                class="bg-gray-50 hover:bg-purple-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">🐎 Kuda</td>
+                <td class="px-6 py-4 text-center text-gray-700">30</td>
+                <td class="px-6 py-4 text-center text-gray-700">57</td>
+                <td class="px-6 py-4 text-center text-gray-700">125</td>
+                <td class="px-6 py-4 text-center text-gray-700">54</td>
+                <td class="px-6 py-4 text-center text-gray-700">15</td>
+                <td
+                  class="px-6 py-4 text-center font-bold text-purple-600 text-lg"
+                >
+                  281
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-purple-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">🐐 Kambing</td>
+                <td class="px-6 py-4 text-center text-gray-700">15</td>
+                <td class="px-6 py-4 text-center text-gray-700">4</td>
+                <td class="px-6 py-4 text-center text-gray-700">25</td>
+                <td class="px-6 py-4 text-center text-gray-700">13</td>
+                <td class="px-6 py-4 text-center text-gray-700">5</td>
+                <td
+                  class="px-6 py-4 text-center font-bold text-purple-600 text-lg"
+                >
+                  62
+                </td>
+              </tr>
+              <tr
+                class="bg-gray-50 hover:bg-purple-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">
+                  🐓 Ayam Kampung
+                </td>
+                <td class="px-6 py-4 text-center text-gray-700">1180</td>
+                <td class="px-6 py-4 text-center text-gray-700">1275</td>
+                <td class="px-6 py-4 text-center text-gray-700">2565</td>
+                <td class="px-6 py-4 text-center text-gray-700">1555</td>
+                <td class="px-6 py-4 text-center text-gray-700">155</td>
+                <td
+                  class="px-6 py-4 text-center font-bold text-purple-600 text-xl pulse-animation"
+                >
+                  8395
+                </td>
+              </tr>
+              <tr
+                class="bg-white hover:bg-purple-50 transition-colors duration-200"
+              >
+                <td class="px-6 py-4 font-medium text-gray-900">🦆 Itik</td>
+                <td class="px-6 py-4 text-center text-gray-700">50</td>
+                <td class="px-6 py-4 text-center text-gray-700">50</td>
+                <td class="px-6 py-4 text-center text-gray-700">60</td>
+                <td class="px-6 py-4 text-center text-gray-700">50</td>
+                <td class="px-6 py-4 text-center text-gray-700">50</td>
+                <td
+                  class="px-6 py-4 text-center font-bold text-purple-600 text-lg"
+                >
+                  260
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p>&copy; 2024 Desa Borimasunggu. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Intersection Observer Script -->
+    <script>
+      // Intersection Observer untuk animasi fade-in
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      // Observe semua elemen dengan class fade-in
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeElements = document.querySelectorAll(".fade-in");
+        fadeElements.forEach((el) => observer.observe(el));
+      });
+
+      // Smooth scroll untuk internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

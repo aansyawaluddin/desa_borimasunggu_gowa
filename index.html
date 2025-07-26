@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beranda - Desa Borimasunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "fade-in-left": "fadeInLeft 0.8s ease-out",
+              "fade-in-right": "fadeInRight 0.8s ease-out",
+              "bounce-slow": "bounce 3s infinite",
+              marquee: "marquee 20s linear infinite",
+              "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
+              float: "float 3s ease-in-out infinite",
+              gradient: "gradient 6s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.8) 0%,
+          rgba(59, 130, 246, 0.6) 50%,
+          rgba(147, 197, 253, 0.4) 100%
+        );
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Intersection Observer styles */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Navbar styles - perbaikan utama */
+      .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-scrolled a {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled button {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled svg {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled .mobile-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased bg-gray-50">
+    <header
+      x-data="{ 
+        open: false, 
+        scrolled: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+        }
+      }"
+      :class="scrolled ? 'navbar-scrolled' : ''"
+      class="fixed top-0 w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between md:justify-center p-4"
+      >
+        <!-- Desktop nav -->
+        <nav class="space-x-6 hidden md:flex">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          @click="open = !open"
+          class="md:hidden flex items-center justify-center space-x-2 focus:outline-none absolute right-4 z-60"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white transition-colors duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              x-show="!open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              x-show="open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          <span class="text-white font-medium">Menu</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        x-show="open"
+        @click.outside="open = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        class="absolute top-full left-0 w-full mobile-menu shadow-lg md:hidden"
+        :class="scrolled ? 'bg-white/95' : 'bg-black/20'"
+        style="backdrop-filter: blur(10px)"
+      >
+        <nav class="flex flex-col items-center space-y-4 p-6">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- Background -->
+      <div
+        class="absolute z-10 inset-0 parallax w-full h-full"
+        style="background-image: url('/images/desa.jpg')"
+      >
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4"
+      >
+        <!-- Logo -->
+        <div class="animate-float mb-6">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow"
+          >
+            <img src="/images/logo.png" alt="Logo Desa" class="h-25 w-20" />
+          </div>
+        </div>
+
+        <!-- Judul -->
+        <h1
+          class="text-6xl font-bold mb-4 text-shadow animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          Desa Borimasunggu
+        </h1>
+
+        <!-- Subtitle  -->
+        <div
+          class="glass-effect rounded-2xl px-8 py-4 mb-8 animate-fade-in-up"
+          style="animation-delay: 0.4s"
+        >
+          <p class="text-xl font-medium">
+            Kecamatan Biringbulu, Kabupaten Gowa, Provinsi Sulawesi Selatan
+          </p>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="absolute bottom-0 w-full z-30">
+        <div class="gradient-bg py-4 overflow-hidden">
+          <div
+            class="animate-marquee whitespace-nowrap text-white font-bold text-lg"
+          >
+            Selamat Datang di Website Desa Borimasunggu Kecamatan Biringbulu
+            Kabupaten Gowa Provinsi Sulawesi Selatan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="relative">
+      <!-- Sejarah -->
+      <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+          <!-- Section Header -->
+          <div class="text-center mb-16 fade-in">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">
+              Sejarah Desa Borimasunggu
+            </h2>
+            <div
+              class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"
+            ></div>
+          </div>
+
+          <!-- Story Cards -->
+          <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Card 1 -->
+            <div class="card-hover bg-white rounded-3xl shadow-xl p-8 fade-in">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4"
+                >
+                  <span class="text-white font-bold text-xl">1</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">
+                  Awal Pembentukan
+                </h3>
+              </div>
+              <div class="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Desa Borimasunggu adalah merupakan salah satu Desa dari 9 Desa
+                  dan 2 Kelurahan dalam wilayah Kecamatan Biringbulu dibentuk
+                  pada tahun
+                  <span class="font-bold text-blue-600">2000</span> berdasarkan
+                  Peraturan Daerah Kabupaten Gowa tentang penggabungan Desa
+                  dalam wilayah Kabupaten Gowa.
+                </p>
+                <p>
+                  Menurut cerita legenda, bahwa nama
+                  <span class="font-bold text-purple-600">Borimasunggu</span>
+                  diambil karna pada masa itu semua warga yang ada diwilayah
+                  tersebut sangat antusias dalam melaksanakan gotong royong
+                  maupun kegiatan lainya. pada mulanya adalah sebuah
+                  perkampungan petani yang tanahnya sangat subur, kampung
+                  tersebut ramai dihuni petani yang bergerak di bidang
+                  persawahan (padi), perkebunan (jagung) serta peternakan
+                  (kerbau, sapi dan kambing).
+                </p>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card-hover bg-white rounded-3xl shadow-xl p-8 fade-in">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4"
+                >
+                  <span class="text-white font-bold text-xl">2</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">Era Kolonial</h3>
+              </div>
+              <div class="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Pada zaman penjajahan Hindia Belanda, ketika itu Sulawesi
+                  Selatan diberi status residen yang dimasukkan dalam
+                  Gouvernement Grote Oost, dalam hal ini Gowa dijadikan Onder
+                  Afdeling di bawah Afdeling Bantaeng, yang pada waktu itu
+                  Afdeling Bantaeng membawahi Onder Afdeling Sinjai, Onder
+                  Afdeling Selayar dan Onder Afdeling Gowa.
+                </p>
+                <p>
+                  Perkembangan selanjutnya adalah dengan dikeluarkannya surat
+                  keputusan Gubernur Sulawesi tahun 1951 dengan nomor 618
+                  tentang perubahan kata "Afdeling" menjadi "Daerah", nama Onder
+                  Afdeling menjadi "Kewedanan" yang terbagi atas beberapa
+                  Distrik.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Peta dan Tabel  -->
+      <section class="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="text-center mb-16 fade-in">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">
+              Peta Wilayah & Kepemimpinan
+            </h2>
+            <div
+              class="w-24 h-1 bg-gradient-to-r from-purple-500 to-blue-600 mx-auto rounded-full"
+            ></div>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Peta -->
+            <div
+              class="card-hover bg-white rounded-3xl shadow-2xl p-8 fade-in max-w-2xl mx-auto"
+            >
+              <div class="text-center mb-8">
+                <div
+                  class="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mb-4"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">
+                  Peta Wilayah Desa
+                </h3>
+                <p class="text-gray-600">Letak geografis Desa Borimasunggu</p>
+              </div>
+              <div class="relative group">
+                <div
+                  class="bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl p-1"
+                >
+                  <div class="bg-white rounded-2xl p-6">
+                    <div class="w-full rounded-xl overflow-hidden">
+                      <img
+                        src="/images/peta.png"
+                        alt="Peta Wilayah Desa Borimasunggu"
+                        class="w-full h-auto map-image rounded-xl object-cover"
+                        style="min-height: 256px"
+                      />
+                    </div>
+                    <div class="text-center mt-4">
+                      <p class="text-gray-500 font-medium">Peta Wilayah Desa</p>
+                      <p class="text-sm text-gray-400">
+                        Sumber: Dinas Pemetaan Kabupaten Gowa
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kepala Desa -->
+            <div class="card-hover bg-white rounded-3xl shadow-2xl p-8 fade-in">
+              <div class="text-center mb-8">
+                <div
+                  class="inline-flex items-center justify-center w-16 h-16 bg-purple-500 rounded-full mb-4"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                    />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">
+                  Kepala Desa
+                </h3>
+                <p class="text-gray-600">Periode 2000 – Sekarang</p>
+              </div>
+
+              <div class="overflow-hidden rounded-2xl border border-gray-200">
+                <table class="w-full">
+                  <thead
+                    class="bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                  >
+                    <tr>
+                      <th class="px-6 py-4 text-left font-bold">No.</th>
+                      <th class="px-6 py-4 text-left font-bold">Kepala Desa</th>
+                      <th class="px-6 py-4 text-left font-bold">Periode</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-blue-50 transition-colors duration-200">
+                      <td class="px-6 py-4 font-medium text-gray-900">1</td>
+                      <td class="px-6 py-4 text-gray-700">Abd. Siama Talli</td>
+                      <td class="px-6 py-4 text-gray-700">2000 – 2007</td>
+                    </tr>
+                    <tr
+                      class="hover:bg-purple-50 transition-colors duration-200"
+                    >
+                      <td class="px-6 py-4 font-medium text-gray-900">2</td>
+                      <td class="px-6 py-4 text-gray-700">Abd. Siama Talli</td>
+                      <td class="px-6 py-4 text-gray-700">2007 – 2013</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50 transition-colors duration-200">
+                      <td class="px-6 py-4 font-medium text-gray-900">3</td>
+                      <td class="px-6 py-4 text-gray-700">
+                        Sakaria Razak, SE.
+                      </td>
+                      <td class="px-6 py-4 text-gray-700">2013 – 2019</td>
+                    </tr>
+                    <tr
+                      class="hover:bg-purple-50 transition-colors duration-200 bg-gradient-to-r from-blue-50 to-purple-50"
+                    >
+                      <td class="px-6 py-4 font-medium text-gray-900">4</td>
+                      <td class="px-6 py-4 text-gray-700 font-semibold">
+                        Sakaria Razak, SE.
+                      </td>
+                      <td class="px-6 py-4 text-gray-700 font-semibold">
+                        2019 – Sekarang
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p>&copy; 2024 Desa Borimasunggu. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Intersection Observer Script -->
+    <script>
+      // Intersection Observer untuk animasi fade-in
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      // Observe semua elemen dengan class fade-in
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeElements = document.querySelectorAll(".fade-in");
+        fadeElements.forEach((el) => observer.observe(el));
+      });
+
+      // Smooth scroll untuk internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

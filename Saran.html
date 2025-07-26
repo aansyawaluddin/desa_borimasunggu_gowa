@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak & Saran - Desa Borimasunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out",
+              "fade-in-left": "fadeInLeft 0.8s ease-out",
+              "fade-in-right": "fadeInRight 0.8s ease-out",
+              "bounce-slow": "bounce 3s infinite",
+              marquee: "marquee 20s linear infinite",
+              "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
+              float: "float 3s ease-in-out infinite",
+              gradient: "gradient 6s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 58, 138, 0.8) 0%,
+          rgba(59, 130, 246, 0.6) 50%,
+          rgba(147, 197, 253, 0.4) 100%
+        );
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Intersection Observer styles */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Navbar styles - perbaikan utama */
+      .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-scrolled a {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled button {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled svg {
+        color: #374151 !important;
+      }
+
+      .navbar-scrolled .mobile-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased bg-gray-50">
+    <header
+      x-data="{ 
+        open: false, 
+        scrolled: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+        }
+      }"
+      :class="scrolled ? 'navbar-scrolled' : ''"
+      class="fixed top-0 w-full z-50 transition-all duration-300"
+    >
+      <div
+        class="max-w-7xl mx-auto flex items-center justify-between md:justify-center p-4"
+      >
+        <!-- Desktop nav -->
+        <nav class="space-x-6 hidden md:flex">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          @click="open = !open"
+          class="md:hidden flex items-center justify-center space-x-2 focus:outline-none absolute right-4 z-60"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white transition-colors duration-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              x-show="!open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              x-show="open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          <span class="text-white font-medium">Menu</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        x-show="open"
+        @click.outside="open = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        class="absolute top-full left-0 w-full mobile-menu shadow-lg md:hidden"
+        :class="scrolled ? 'bg-white/95' : 'bg-black/20'"
+        style="backdrop-filter: blur(10px)"
+      >
+        <nav class="flex flex-col items-center space-y-4 p-6">
+          <a
+            href="index.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Beranda</a
+          >
+          <a
+            href="StatistikPenduduk.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Statistik Penduduk</a
+          >
+          <a
+            href="SumberDayaAlam.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Alam</a
+          >
+          <a
+            href="SumberDayaManusia.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Sumber Daya Manusia</a
+          >
+          <a
+            href="Dokumen.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Dokumen</a
+          >
+          <a
+            href="KelembagaanDesa.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kelembagaan Desa</a
+          >
+          <a
+            href="Saran.html"
+            class="text-white hover:text-blue-300 transition-colors duration-200"
+            >Kontak & Saran</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- Background -->
+      <div
+        class="absolute z-10 inset-0 parallax w-full h-full"
+        style="background-image: url('/images/desa.jpg')"
+      >
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4"
+      >
+        <!-- Logo -->
+        <div class="animate-float mb-6">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow"
+          >
+            <img src="/images/logo.png" alt="Logo Desa" class="h-25 w-20" />
+          </div>
+        </div>
+
+        <!-- Judul -->
+        <h1
+          class="text-6xl font-bold mb-4 text-shadow animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          Desa Borimasunggu
+        </h1>
+
+        <!-- Subtitle  -->
+        <div
+          class="glass-effect rounded-2xl px-8 py-4 mb-8 animate-fade-in-up"
+          style="animation-delay: 0.4s"
+        >
+          <p class="text-xl font-medium">
+            Kecamatan Biringbulu, Kabupaten Gowa, Provinsi Sulawesi Selatan
+          </p>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="absolute bottom-0 w-full z-30">
+        <div class="gradient-bg py-4 overflow-hidden">
+          <div
+            class="animate-marquee whitespace-nowrap text-white font-bold text-lg"
+          >
+            Selamat Datang di Website Desa Borimasunggu Kecamatan Biringbulu
+            Kabupaten Gowa Provinsi Sulawesi Selatan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="relative py-12 px-4 md:px-8 max-w-7xl mx-auto">
+      <!-- Judul Halaman -->
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Kontak & Saran</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Silahkan sampaikan saran, masukan, atau pertanyaan Anda kepada
+          Pemerintah Desa Borimasunggu
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Form Saran -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-600 py-4 px-6">
+            <h3 class="text-xl font-semibold text-white">
+              Form Saran & Masukan
+            </h3>
+          </div>
+          <!-- Form dengan id untuk JavaScript -->
+          <form id="saranForm" class="p-6">
+            <div class="mb-6">
+              <label for="nama" class="block text-gray-700 font-medium mb-2"
+                >Nama Lengkap</label
+              >
+              <input
+                type="text"
+                id="nama"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                placeholder="Masukkan nama lengkap Anda"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label for="alamat" class="block text-gray-700 font-medium mb-2"
+                >Alamat</label
+              >
+              <input
+                type="text"
+                id="alamat"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                placeholder="Masukkan alamat lengkap Anda"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label for="saran" class="block text-gray-700 font-medium mb-2"
+                >Saran & Masukan</label
+              >
+              <textarea
+                id="saran"
+                rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                placeholder="Tulis saran dan masukan Anda di sini..."
+                required
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              Kirim Saran
+            </button>
+          </form>
+        </div>
+
+        <!-- Informasi Kontak -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-600 py-4 px-6">
+            <h3 class="text-xl font-semibold text-white">Kontak Kantor Desa</h3>
+          </div>
+          <div class="p-6">
+            <div class="flex items-start mb-8">
+              <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-800 mb-1">
+                  Nomor Telepon
+                </h4>
+                <p class="text-gray-600">+62 822-9607-0101</p>
+                <a
+                  href="tel:+6282296070101"
+                  class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                  Hubungi Sekarang
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start mb-8">
+              <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-800 mb-1">Email</h4>
+                <p class="text-gray-600">desaaborimasunggu@gmail.com</p>
+                <a
+                  href="mailto:borimasunggu@gmail.com"
+                  class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  Kirim Email
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start mb-8">
+              <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-800 mb-1">
+                  Alamat Kantor
+                </h4>
+                <p class="text-gray-600">
+                  Jl. Poros Borimasunggu, Desa Borimasunggu
+                </p>
+                <p class="text-gray-600">Kec. Biringbulu, Kab. Gowa</p>
+                <p class="text-gray-600">Sulawesi Selatan</p>
+                <a
+                  href="https://maps.app.goo.gl/mSpFwkDyouw8LEjX7"
+                  target="_blank"
+                  class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                    />
+                  </svg>
+                  Lihat di Peta
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-800 mb-1">
+                  Jam Operasional
+                </h4>
+                <p class="text-gray-600">Senin - Jumat: 08.00 - 16.00 WITA</p>
+                <p class="text-gray-600">Sabtu - Minggu & Hari Libur: Tutup</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p>&copy; 2024 Desa Borimasunggu. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Intersection Observer & Smooth Scroll -->
+    <script>
+      // Script fade-in
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      }, observerOptions);
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target)
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      });
+
+      // === Script kirim data ke Google Apps Script ===
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("saranForm");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const nama = document.getElementById("nama").value.trim();
+          const alamat = document.getElementById("alamat").value.trim();
+          const saran = document.getElementById("saran").value.trim();
+          const payload = { nama, alamat, saran };
+
+          try {
+            await fetch(
+              "https://script.google.com/macros/s/AKfycbzI40nfZWNJjY-oTE6bBjWOcy9L2NxtepgU0USeXkiE4SH0XWfXSmx1jX_Qu2h_tQazdA/exec",
+              {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              }
+            );
+            alert("Terima kasih, saran Anda sudah terkirim!");
+            form.reset();
+          } catch (err) {
+            console.error(err);
+            alert(
+              "Maaf, terjadi kesalahan saat mengirim saran. Silakan coba lagi."
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
